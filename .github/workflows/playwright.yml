@@ -40,7 +40,7 @@ jobs:
     # Removed browser install step since we cache browsers
 
     - name: Run Playwright tests
-      run: npx playwright test WithPOM.spec.js --project='Chromium' --reporter=list
+      run: npx playwright test WithoutPOM.spec.js --project='Chromium'
 
     - name: Generate Allure report
       run: npm run allure:report
