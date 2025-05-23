@@ -1,8 +1,6 @@
 const { chromium } = require('@playwright/test');
 
-module.exports = async () => {
-
-  const browser = await chromium.launch();
+module.exports = async ({browser}) => {
 
   const context = await browser.newContext();
 
