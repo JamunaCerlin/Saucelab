@@ -21,21 +21,20 @@ export default defineConfig({
     {
       name: 'chromium',
       use: {
-        browserName: 'chromium',
+        browserName:'chromium',
+        //channel:'chrome',
         video: 'on',
         trace: 'on',
-        storageState: 'state.json'
+        screenshot:'only-on-failure',
       },
     },
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
-      storageState: 'state.json',
     },
     {
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
-      storageState: 'state.json',
     },
   ],
 });
