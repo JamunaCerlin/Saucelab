@@ -8,8 +8,8 @@ on:
 
 jobs:
   test:
-    timeout-minutes: 30
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
     - uses: actions/checkout@v4
@@ -30,23 +30,29 @@ jobs:
       uses: actions/cache@v4
       with:
         path: ~/.cache/ms-playwright
-        key: ${{ runner.os }}-playwright-chromium
+        key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-playwright-
 
     - name: Install dependencies
       run: npm ci
 
-    # Removed browser install step since we cache browsers
+    - name: Install Chromium (if not cached)
+      run: |
+        if [ ! -d ~/.cache/ms-playwright/chromium-* ]; then
+          echo "Chromium not cached — installing..."
+          npx playwright install chromium --with-deps
+        else
+          echo "Chromium already cached."
+        fi
 
     - name: Run Playwright tests
-      run: npx playwright test WithoutPOM.spec.js --project='Chromium'
+      run: npm run test
 
     - name: Generate Allure report
       run: npm run allure:report
 
     - name: Upload Playwright report
-      if: ${{ !cancelled() }}
       uses: actions/upload-artifact@v4
       with:
         name: playwright-report
@@ -54,7 +60,6 @@ jobs:
         retention-days: 10
 
     - name: Upload Allure report
-      if: ${{ !cancelled() }}
       uses: actions/upload-artifact@v4
       with:
         name: allure-report
