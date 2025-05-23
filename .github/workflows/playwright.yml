@@ -48,14 +48,9 @@ jobs:
 
     - name: Run Playwright tests
       run: npm run test
-<<<<<<< HEAD
-=======
-
-    - name: Generate Allure report
-      run: npm run allure:report
->>>>>>> e5093442da7958eef1abf7f613564f9d9b7abb62
 
     - name: Upload Playwright report
+      if: ${{ !cancelled() }}
       uses: actions/upload-artifact@v4
       with:
         name: playwright-report
@@ -67,10 +62,7 @@ jobs:
       run: npm run allure:report
 
     - name: Upload Allure report
-<<<<<<< HEAD
       if: github.ref == 'refs/heads/main'
-=======
->>>>>>> e5093442da7958eef1abf7f613564f9d9b7abb62
       uses: actions/upload-artifact@v4
       with:
         name: allure-report
