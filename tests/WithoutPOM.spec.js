@@ -28,7 +28,4 @@ test("Sauce lab", async ({ page }) => {
     
     await page.locator('#logout_sidebar_link').click()
 
-
-
-
 })
