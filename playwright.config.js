@@ -20,8 +20,12 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-      storageState: 'state.json',
+      use: {
+        browserName: 'chromium',
+        video: 'on',
+        trace: 'on',
+        storageState: 'state.json'
+      },
     },
     {
       name: 'firefox',
